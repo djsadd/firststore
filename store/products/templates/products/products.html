@@ -16,15 +16,12 @@
 
                 <h1 class="my-4">Store</h1>
                 <div class="list-group">
-                    <a href="#" class="list-group-item">Новинки</a>
-                    <a href="#" class="list-group-item">Одежда</a>
-                    <a href="#" class="list-group-item">Обувь</a>
-                    <a href="#" class="list-group-item">Аксессуары</a>
-                    <a href="#" class="list-group-item">Подарки</a>
+                    {% for cat in category %}
+                        <a href="#" class='list-group-item'>{{ cat.name }}</a>
+                    {% endfor %}
                 </div>
-
-            </div>
             <!-- /.col-lg-3 -->
+            </div>
 
             <div class="col-lg-9">
 
@@ -56,20 +53,21 @@
                 </div>
 
                 <div class="row">
-                    {% for product in products %}
+
+                    {% for prod in products %}
                         <div class="col-lg-4 col-md-6 mb-4">
                             <div class="card h-100">
                                 <a href="#">
                                     <img class="card-img-top"
-                                         src="{{ product.url }}"
+                                         src="{{ prod.image.url }}"
                                          alt="">
                                 </a>
                                 <div class="card-body">
                                     <h4 class="card-title">
-                                        <a href="#">{{ product.name }}</a>
+                                        <a href="#">{{ prod.name }}</a>
                                     </h4>
-                                    <h5>{{ product.price }}</h5>
-                                    <p class="card-text">{{ product.description }}</p>
+                                    <h5>{{ prod.price }} руб.</h5>
+                                    <p class="card-text">{{ prod.description }}</p>
                                 </div>
                                 <div class="card-footer text-center">
                                     <button type="button" class="btn btn-outline-success">Отправить в корзину</button>
