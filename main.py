@@ -1,12 +1,10 @@
-class Point:
-    def __init__(self, x, y):
-        self.x = x
-        self.y = y
-
-    @classmethod
-    def get(cls):
-        return cls.x
+lst_in = [[1, 2, 3],
+          [1, 2, 3],
+          [1, 2, 3]]
 
 
-point = Point(1, 4)
-print(point.get())
+b = lst_in[::]
+
+b[0][0] = 44
+print(b)
+print(lst_in)

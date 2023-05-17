@@ -1,13 +1,19 @@
-from django.contrib.auth.forms import AuthenticationForm, UserCreationForm, UserChangeForm
-from users.models import *
+import uuid
+from datetime import timedelta
+
 from django import forms
+from django.contrib.auth.forms import (AuthenticationForm, UserChangeForm,
+                                       UserCreationForm)
+from django.utils.timezone import now
+
+from users.models import *
+from users.tasks import send_email_verification
 
 
 class UserLoginForm(AuthenticationForm):
     username = forms.CharField(widget=forms.TextInput(attrs={
         'class': 'form-control py-4',
         'placeholder': 'Введите имя пользователя'
-
     }))
     password = forms.CharField(widget=forms.PasswordInput(attrs={
         'class': 'form-control py-4',
@@ -48,6 +54,11 @@ class UserRegistrationForm(UserCreationForm):
     class Meta:
         model = User
         fields = ('first_name', 'last_name', 'username', 'email', 'password1', 'password2')
+
+    def save(self, commit=True):
+        user = super(UserRegistrationForm, self).save(commit=commit)
+        send_email_verification.delay(user.id)
+        return user
 
 
 class UserProfileForm(UserChangeForm):

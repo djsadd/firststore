@@ -1,20 +1,62 @@
-from django.shortcuts import render
+# Create your views here.
+from django.contrib.auth.decorators import login_required
+from django.core.paginator import Paginator
+from django.shortcuts import HttpResponseRedirect, render
+from django.views.generic import ListView
+from django.views.generic.base import TemplateView
+from django.views.generic.edit import CreateView
+from django.core.cache import cache
+
+from common.views import *
 from products.models import *
 
-# Create your views here.
+
+class IndexView(TitleMixin, TemplateView):
+    template_name = 'products/index.html'
+    title = 'Store - Главная'
 
 
-def index(request):
-    context = {
-        'title': 'Store',
-               }
-    return render(request, 'products/index.html', context=context)
+class ProductListView(TitleMixin, ListView):
+    model = Product
+    template_name = 'products/products.html'
+    paginate_by = 3
+    title = 'Store - Каталог'
+
+    def get_queryset(self):
+        queryset = super(ProductListView, self).get_queryset()
+        category_id = self.kwargs.get('category_id')
+        return queryset.filter(category_id=category_id) if category_id else queryset
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        context = super(ProductListView, self).get_context_data(**kwargs)
+        categories = cache.get('category')
+        if not categories:
+            context['category'] = ProductCategory.objects.all()
+            cache.set('category', context['category'], 30)
+        else:
+            context['category'] = categories
+
+        return context
 
 
-def products(request):
-    context = {
-        'title': 'products - каталог',
-        'products': Product.objects.all(),
-        'category': ProductCategory.objects.all(),
-               }
-    return render(request, 'products/products.html', context=context)
+@login_required
+def basket_add(request, product_id):
+    product = Product.objects.get(id=product_id)
+    baskets = Basket.objects.filter(user=request.user, product=product)
+
+    if not baskets.exists():
+        Basket.objects.create(user=request.user, product=product, quantity=1)
+    else:
+        basket = baskets.first()
+        basket.quantity += 1
+        basket.save()
+
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])
+
+
+@login_required
+def basket_remove(request, basket_id):
+    basket = Basket.objects.get(id=basket_id)
+    basket.delete()
+    return HttpResponseRedirect(request.META['HTTP_REFERER'])
+
