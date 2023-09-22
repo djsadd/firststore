@@ -54,8 +54,6 @@ SECRET_KEY = env('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = ['81.90.181.86',
-                 ]
 
 DOMAIN_NAME = env('DOMAIN_NAME')
 
@@ -121,7 +119,6 @@ WSGI_APPLICATION = 'store.wsgi.application'
 
 INTERNAL_IPS = [
     '127.0.0.1',
-    'localhost'
 ]
 
 # Redis
