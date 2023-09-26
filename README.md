@@ -8,6 +8,12 @@
 <img src="https://github.com/djsadd/firststore/blob/main/store/static/vendor/img/Снимок%20экрана%202023-09-26%20234024.png">
 <img src="https://github.com/djsadd/firststore/blob/main/store/static/vendor/img/Снимок%20экрана%202023-09-26%20234035.png">
 
+
+# First step: install env and install requirements.txt 
+  > - ```python3 -m venv {myenvname}```
+  > - ```source {myenvname}/Scripts/activate```
+  > - ```pip install requierements.txt```
+
 # First step clone this project
 
 # Second step install redis
@@ -15,6 +21,8 @@
 # Third step run celery
 
 # Fourth step install stripe
+1. <p><a href="https://stripe.com/docs/stripe-cli">Download stripe </a> in your os and and move 'stripe' file to root project on one level with 'manage.py'</p>
+2. In terminal write command: "stripe listen --forward-to 127.0.0.1:8000/webhook/stripe/"
 # Redis
 # Celery
 # Stripe
