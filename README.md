@@ -16,7 +16,7 @@
 
 # Second step install redis
 1. https://redis.io/docs/getting-started/ - documentation for install redis.
-2. run redis
+2. run redis command: redis-server
 
 # Third step run celery
 1. in venv write command: celery -A store worker -l INFO
