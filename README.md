@@ -1,1 +1,3 @@
-# djsadd
+# Redis
+# Celery
+# Stripe
