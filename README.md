@@ -14,15 +14,13 @@
   > - ```source {myenvname}/Scripts/activate```
   > - ```pip install requierements.txt```
 
-# First step clone this project
-
 # Second step install redis
+1. https://redis.io/docs/getting-started/ - documentation for install redis.
+2. run redis
 
 # Third step run celery
+1. in venv write command: celery -A store worker -l INFO
 
 # Fourth step install stripe
 1. <p><a href="https://stripe.com/docs/stripe-cli">Download stripe </a> in your os and and move 'stripe' file to root project on one level with 'manage.py'</p>
 2. In terminal write command: "stripe listen --forward-to 127.0.0.1:8000/webhook/stripe/"
-# Redis
-# Celery
-# Stripe
