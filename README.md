@@ -21,8 +21,11 @@
 # Third step run celery
 1. in venv write command: celery -A store worker -l INFO
 
+# Fourth step install stripe
+1. <p><a href="https://stripe.com/docs/stripe-cli">Download stripe </a> in your os and and move 'stripe' file to root project on one level with 'manage.py'</p>
+2. In terminal write command: "stripe listen --forward-to 127.0.0.1:8000/webhook/stripe/"
 
-# Fourth step change settings:
+# Five step change settings:
 1. Change database settings:
    ```
    DATABASES = {
@@ -51,6 +54,4 @@
     STRIPE_SECRET_KEY={use your setting secret key}
     STRIPE_WEBHOOK_SECRET={use your setting secret key}
     ```
-# Fourth step install stripe
-1. <p><a href="https://stripe.com/docs/stripe-cli">Download stripe </a> in your os and and move 'stripe' file to root project on one level with 'manage.py'</p>
-2. In terminal write command: "stripe listen --forward-to 127.0.0.1:8000/webhook/stripe/"
+
