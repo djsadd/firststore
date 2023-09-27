@@ -55,3 +55,6 @@
     STRIPE_WEBHOOK_SECRET={use your setting secret key}
     ```
 
+# Last step: Run Server
+  > - go to root folder in porject and runserver
+  > - ```py manage.py runserver```
